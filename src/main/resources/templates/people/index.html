@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Інформація про читача')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+<div class="container mt-5 mb-5">
+    <!-- Форма редактирования пользователя -->
+    <h2>Інформація про читача</h2>
+
+    <div class="card mt-4 mb-5">
+        <div class="card-header">
+            <h2>Деталі читача</h2>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>ID:</strong> <span th:text="${person.id}"></span></p>
+            <p class="card-text"><strong>Ім'я читача:</strong> <span th:text="${person.username}"></span></p>
+            <p class="card-text"><strong>Рік народження:</strong> <span th:text="${person.yearOfBirth}"></span></p>
+            <p class="card-text"><strong>Роль:</strong> <span th:replace="role-display :: roleDisplay(${person.role})"></span></p>
+        </div>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+    <h2>Книги</h2>
+    <table th:if="${books.size() > 0}" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Автор</th>
+            <th>Рік випуску</th>
+            <th>Деталі</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.yearRelease}"></td>
+            <td>
+                <a th:href="@{/books/remove/{id}(id=${book.id})}" class="btn btn-warning btn-sm">Звільнити книгу</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div  th:if="${books.size() == 0}" class="alert alert-success">
+        <p>У читача поки не має жодної книги</p>
+    </div>
+
+
+</div>
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>

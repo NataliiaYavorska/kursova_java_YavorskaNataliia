@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Library')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+<div class="container">
+    <h1 th:if="${auth.role == 'ROLE_ADMIN'}">Ласкаво просимо в особистий кабінет адміністратора</h1>
+    <h1 th:if="${auth.role == 'ROLE_USER'}">Ласкаво просимо в особистий кабінет читача</h1>
+
+    <div class="card mt-4 mb-5">
+        <div class="card-header">
+            <h2>Деталі користувача</h2>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>Ім'я користувача:</strong> <span th:text="${auth.username}"></span> </p>
+            <p class="card-text"><strong>Рік народження:</strong> <span th:text="${auth.yearOfBirth}"></span></p>
+            <p class="card-text"><strong>Роль:</strong> <span th:replace="role-display :: roleDisplay(${auth.role})"></span></p>
+        </div>
+    </div>
+
+    <h2>Книги</h2>
+    <table th:if="${orders.size() > 0}" class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Назва</th>
+                <th>Автор</th>
+                <th>Рік випуску</th>
+                <th>Дата придбання</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.books.id}"></td>
+                <td th:text="${order.books.name}"></td>
+                <td th:text="${order.books.author}"></td>
+                <td th:text="${order.books.yearRelease}"></td>
+                <td th:text="${#temporals.format(order.date, 'dd-MM-yyyy HH:mm')}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div th:if="${orders.size() == 0}" class="alert alert-success">
+        <p>Ви ще не взяли жодної книги</p>
+    </div>
+
+</div>
+
+
+
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>

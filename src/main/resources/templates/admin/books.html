@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Книги')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+<div class="container mt-5 mb-5">
+    <p>
+        <a href="/admin/add-book" class="btn btn btn-primary">Додати нову книгу</a>
+    </p>
+
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+    <h2>Книги</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Автор</th>
+            <th>Рік випуску</th>
+            <th>Статус</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="bookWithStatus : ${booksWithStatus}">
+            <!-- bookWithStatus[0] - объект Books -->
+            <!-- bookWithStatus[1] - объект order -->
+            <td th:text="${bookWithStatus[0].id}"></td>
+            <td>
+                <a th:href="@{/books/{id}(id=${bookWithStatus[0].id})}" th:text="${bookWithStatus[0].name}"></a>
+            </td>
+            <td th:text="${bookWithStatus[0].author}"></td>
+            <td th:text="${bookWithStatus[0].yearRelease}"></td>
+            <td th:text="${bookWithStatus[1] != null ? 'У читача' : 'Вільна'}"></td>
+            <td>
+                <a th:href="@{/books/detail/{id}(id=${bookWithStatus[0].id})}" class="btn btn-info btn-sm">Редагувати книгу</a>
+                <a th:href="@{/books/delete/{id}(id=${bookWithStatus[0].id})}" class="btn btn-danger btn-sm">Видалити книгу</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>

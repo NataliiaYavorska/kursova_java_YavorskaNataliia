@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Сталася Ппомилка')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+
+<div class="container">
+    <h1>Щось пішло не так!</h1>
+    <p th:text="${errorMessage}"></p>
+    <hr>
+    <a th:href="@{/home}">Повенутись на головну сторінку</a>
+
+</div>
+
+
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>

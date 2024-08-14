@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Читачі')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+<div class="container mt-5 mb-5">
+    <p>
+        <a href="/admin/registration" class="btn btn-primary">Зареєструвати нового читача</a>
+    </p>
+
+
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+
+    <h2>Читачі</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ім'я</th>
+            <th>Роль</th>
+            <th>Рік народження</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${people}">
+            <td th:text="${person.id}"></td>
+            <td>
+                <a th:href="@{/people/{id}(id=${person.id})}" th:text="${person.username}"></a>
+            </td>
+            <td>
+                <span th:insert="role-display :: roleDisplay(${person.role})"></span>
+            </td>
+            <td th:text="${person.yearOfBirth}"></td>
+            <td>
+                <a th:href="@{/people/detail/{id}(id=${person.id})}" class="btn btn-info btn-sm">Редагувати читача</a>
+                <a th:href="@{/people/delete/{id}(id=${person.id})}" class="btn btn-danger btn-sm">Видалити читача</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>

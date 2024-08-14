@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Реєстрація')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+<div class="container mt-5 mb-5 d-flex justify-content-center align-items-center text-center">
+    <form th:method="POST" th:action="@{/admin/registration}" th:object="${person}">
+        <div class="form-group">
+            <label for="username">Введіть ім'я користувача:</label>
+            <input type="text" th:field="*{username}" id="username" class="form-control"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ім'я користувача з помилкой</div>
+        </div>
+
+        <div class="form-group">
+            <label for="yearOfBirth">Введіть рік народження:</label>
+            <input type="text" th:field="*{yearOfBirth}" id="yearOfBirth" class="form-control"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}">Рік народження з помилкой</div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Введите пароль:</label>
+            <input type="password" th:field="*{password}" id="password" class="form-control"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Пароль  з помилкой</div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="role">Роль:</label>
+            <select id="role" th:field="*{role}" class="form-control">
+                <option value="ROLE_USER" selected>Читач</option>
+                <option value="ROLE_ADMIN">Адмін</option>
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Зареєструвати</button>
+    </form>
+</div>
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>

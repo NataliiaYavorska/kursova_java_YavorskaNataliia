@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Role Display</title>
+</head>
+<body>
+<span th:fragment="roleDisplay(role)">
+        <span th:if="${role == 'ROLE_USER'}">Читач</span>
+        <span th:if="${role == 'ROLE_ADMIN'}">Адмін</span>
+        <span th:if="${role != 'ROLE_USER' and role != 'ROLE_ADMIN'}">Невідома роль</span>
+    </span>
+</body>
+</html>

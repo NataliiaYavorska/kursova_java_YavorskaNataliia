@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Інформація про книгу')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+<div class="container mt-5 mb-5">
+    <h2>Інформація про книгу</h2>
+
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+
+    <div class="card mt-4 mb-5">
+        <div class="card-header">
+            <h2>Деталі книги</h2>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>ID:</strong> <span th:text="${book.id}"></span></p>
+            <p class="card-text"><strong>Назва книги:</strong> <span th:text="${book.name}"></span></p>
+            <p class="card-text"><strong>Автор:</strong> <span th:text="${book.author}"></span></p>
+            <p class="card-text"><strong>Год випуску:</strong> <span th:text="${book.yearRelease}"></span></p>
+            <p th:if="${order != null}" class="card-text"><strong>Дата придбання:</strong> <span th:text="${#temporals.format(order.date, 'dd-MM-yyyy HH:mm')}"></span></p>
+        </div>
+    </div>
+
+    <h2>Книга у користувача</h2>
+    <table th:if="${order != null}" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ім'я</th>
+            <th>Роль</th>
+            <th>Рік народження</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${person}">
+            <td th:text="${person.id}"></td>
+            <td>
+                <a th:href="@{/people/{id}(id=${person.id})}" th:text="${person.username}"></a>
+            </td>
+            <td>
+                <span th:insert="role-display :: roleDisplay(${person.role})"></span>
+            </td>
+            <td th:text="${person.yearOfBirth}"></td>
+            <td>
+                <a th:href="@{/books/remove/{id}(id=${book.id})}" class="btn btn-warning btn-sm">Звільнити книгу</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${order == null}" class="alert alert-success">
+        <p>Книга вільна</p>
+    </div>
+</div>
+
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>

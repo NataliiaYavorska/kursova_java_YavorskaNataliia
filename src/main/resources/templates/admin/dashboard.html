@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="head :: head (pageTitle='Видіні книги')"></th:block>
+<th:block th:replace="head :: body-content"></th:block>
+<div class="container mt-5 mb-5">
+    <p>
+        <a href="/admin/add-order" class="btn btn-primary">Видати книгу</a>
+    </p>
+
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+
+    <h2>Книги у читачів</h2>
+    <table  th:if="${orders.size() > 0}" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ім'я читача</th>
+            <th>Книга</th>
+            <th>Автор</th>
+            <th>Дата придбання книги</th>
+            <th>Дія</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.person.username}"></td>
+            <td th:text="${order.books.name}"></td>
+            <td th:text="${order.books.author}"></td>
+            <td th:text="${#temporals.format(order.date, 'dd-MM-yyyy HH:mm')}"></td>
+            <td>
+                <a th:href="@{/books/remove/{id}(id=${order.books.id})}" class="btn btn-warning btn-sm">Звільнити книгу</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${orders.size() == 0}" class="alert alert-success">
+        <p>Всі книги повернуті</p>
+    </div>
+</div>
+<th:block th:replace="~{footer :: footer}"></th:block>
+</html>
