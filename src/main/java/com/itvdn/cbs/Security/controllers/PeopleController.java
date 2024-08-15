@@ -99,7 +99,9 @@ public class PeopleController {
 
             existingPerson.setUsername(person.getUsername());
             existingPerson.setYearOfBirth(person.getYearOfBirth());
-            existingPerson.setPassword(passwordEncoder.encode(person.getPassword()));
+            if (person.getPassword() != null && !person.getPassword().isEmpty()) {
+                existingPerson.setPassword(passwordEncoder.encode(person.getPassword()));
+            }
             existingPerson.setRole(person.getRole());
             peopleRepository.save(existingPerson);
             redirectAttributes.addFlashAttribute("message", "Інформація оновлена");
